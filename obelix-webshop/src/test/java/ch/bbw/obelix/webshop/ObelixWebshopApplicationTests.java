@@ -1,20 +1,16 @@
 package ch.bbw.obelix.webshop;
 
-import ch.bbw.obelix.webshop.dto.MenhirDto;
+import ch.bbw.obelix.quarry.api.dto.MenhirDto;
 import ch.bbw.obelix.webshop.dto.BasketDto;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-@ActiveProfiles("test")
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class ObelixWebshopApplicationTests {
 
-	@Autowired
-	private WebTestClient webTestClient;
+	private final WebTestClient webTestClient = WebTestClient
+			.bindToServer()
+			.baseUrl("http://localhost:8080")
+			.build();
 
 	@Test
 	void buyMenhir() {
