@@ -18,7 +18,7 @@ public class QuarryWebclientService implements QuarryApi{
 	private final QuarryApi client;
 
 	public QuarryWebclientService() {
-		WebClient webClient = WebClient.builder()
+		var webClient = WebClient.builder()
 				.baseUrl("http://localhost:8081")
 				.defaultStatusHandler(
 						status -> status.is4xxClientError() || status.is5xxServerError(),
