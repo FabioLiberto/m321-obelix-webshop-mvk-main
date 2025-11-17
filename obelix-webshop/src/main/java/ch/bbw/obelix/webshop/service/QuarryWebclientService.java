@@ -2,6 +2,7 @@ package ch.bbw.obelix.webshop.service;
 
 import ch.bbw.obelix.quarry.api.QuarryApi;
 import ch.bbw.obelix.quarry.api.dto.MenhirDto;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -13,13 +14,16 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class QuarryWebclientService implements QuarryApi{
+public class QuarryWebclientService implements QuarryApi {
 
 	private final QuarryApi client;
 
-	public QuarryWebclientService() {
-		var webClient = WebClient.builder()
-				.baseUrl("http://localhost:8081")
+	public QuarryWebclientService(
+			WebClient.Builder webClientBuilder,
+			@Value("${quarry.base-url:http://localhost:8081}") String quarryBaseUrl) {
+
+		WebClient webClient = webClientBuilder
+				.baseUrl(quarryBaseUrl)
 				.defaultStatusHandler(
 						status -> status.is4xxClientError() || status.is5xxServerError(),
 						response -> response.bodyToMono(String.class)
